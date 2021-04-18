@@ -1,11 +1,13 @@
 package states;
 
 import events.ArmingRequestEvent;
-import events.DisarmEvent;
+import events.CancelEvent;
 import events.MotionDetectedEvent;
+import events.NumericEnteredEvent;
 import events.StayRequestEvent;
 import events.TimerRanOutEvent;
 import events.TimerTickedEvent;
+import events.ZoneChangeEvent;
 import events.ZoneUnreadyEvent;
 
 /**
@@ -49,7 +51,7 @@ public abstract class SecuritySystemState {
 	 * 
 	 * @param event
 	 */
-	public void handleEvent(DisarmEvent event) {
+	public void handleEvent(CancelEvent event) {
 
 	}
 
@@ -59,6 +61,15 @@ public abstract class SecuritySystemState {
 	 * @param event
 	 */
 	public void handleEvent(MotionDetectedEvent event) {
+
+	}
+
+	/**
+	 * Specifies action when a number is pressed
+	 * 
+	 * @param event
+	 */
+	public void handleEvent(NumericEnteredEvent event) {
 
 	}
 
@@ -75,13 +86,20 @@ public abstract class SecuritySystemState {
 	 * Process clock tick Generates the timer runs out event
 	 */
 	public void handleEvent(TimerTickedEvent event) {
-
+		
 	}
 
 	/**
 	 * Process clock ticks Generates the timer runs out event
 	 */
 	public void handleEvent(TimerRanOutEvent event) {
+
+	}
+
+	/**
+	 * Specifies what happens when a zone changes
+	 */
+	public void handleEvent(ZoneChangeEvent event) {
 
 	}
 

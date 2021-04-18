@@ -1,8 +1,11 @@
 package display.controller;
 
 import events.ArmingRequestEvent;
+import events.CancelEvent;
 import events.MotionDetectedEvent;
+import events.NumericEnteredEvent;
 import events.StayRequestEvent;
+import events.ZoneChangeEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,7 +32,7 @@ public class DisplayController {
     @FXML
     private Button motionDetectorButton;
     @FXML
-    private TextArea statusDisplay;
+	private TextArea statusDisplay;
     @FXML
     private Button oneButton;
     @FXML
@@ -58,22 +61,22 @@ public class DisplayController {
 
     @FXML
     void handleCancelButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(CancelEvent.instance());
     }
 
     @FXML
     void handleEightButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleFiveButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleFourButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
@@ -83,22 +86,22 @@ public class DisplayController {
 
     @FXML
     void handleNineButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleOneButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleSevenButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleSixButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
@@ -108,32 +111,37 @@ public class DisplayController {
 
     @FXML
     void handleThreeButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleTwoButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleZeroButton(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(NumericEnteredEvent.instance());
     }
 
     @FXML
     void handleZoneOneRadio(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(new ZoneChangeEvent(1));
     }
 
     @FXML
     void handleZoneThreeRadio(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(new ZoneChangeEvent(3));
     }
 
     @FXML
     void handleZoneTwoRadio(ActionEvent event) {
-
+		SecuritySystemContext.instance().handleEvent(new ZoneChangeEvent(2));
     }
+
+	@FXML
+	public void statusDisplayChange(String string) {
+		statusDisplay.setText(string);
+	}
 
 }

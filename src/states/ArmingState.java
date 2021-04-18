@@ -2,7 +2,8 @@ package states;
 
 import events.TimerRanOutEvent;
 import events.TimerTickedEvent;
-import timer.Timer;
+import timer.Notifiable;
+import timer.TimeTracker;
 
 /**
  * Represent the system is disarmed
@@ -10,9 +11,9 @@ import timer.Timer;
  * @author Luan Nguyen
  *
  */
-public class ArmingState extends SecuritySystemState {
+public class ArmingState extends SecuritySystemState implements Notifiable {
 	private static ArmingState instance;
-	private Timer timer;
+	private TimeTracker timer;
 
 	private ArmingState() {
 
@@ -27,24 +28,28 @@ public class ArmingState extends SecuritySystemState {
 
 	@Override
 	public void handleEvent(TimerTickedEvent event) {
-		SecuritySystemContext.instance().showTimeLeft(timer.getTimeValue());
+		SecuritySystemContext.instance().showTimeLeft(timer.getRemainingTime(), "Away");
 	}
 
 	@Override
 	public void handleEvent(TimerRanOutEvent event) {
+		SecuritySystemContext.instance().showTimeLeft(0, "Away");
 		SecuritySystemContext.instance().changeState(AwayState.instance());
 	}
 
 	@Override
 	public void enter() {
+		timer = new TimeTracker(10, this);
 		SecuritySystemContext.instance().showArming();
+		SecuritySystemContext.instance().showTimeLeft(timer.getRemainingTime(), "Away");
 
 	}
 
 	@Override
 	public void leave() {
-		// TODO Auto-generated method stub
-
+		timer = null;
+		SecuritySystemContext.instance().showTimeLeft(0, "Away");
+		SecuritySystemContext.instance().showAway();
 	}
 
 }

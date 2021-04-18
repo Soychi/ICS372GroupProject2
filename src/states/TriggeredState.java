@@ -1,9 +1,10 @@
 package states;
 
-import events.DisarmEvent;
+import events.NumericEnteredEvent;
 import events.TimerRanOutEvent;
 import events.TimerTickedEvent;
-import timer.Timer;
+import timer.Notifiable;
+import timer.TimeTracker;
 
 /**
  * Represent the system is disarmed
@@ -11,9 +12,9 @@ import timer.Timer;
  * @author Luan Nguyen
  *
  */
-public class TriggeredState extends SecuritySystemState {
+public class TriggeredState extends SecuritySystemState implements Notifiable {
 	private static TriggeredState instance;
-	private Timer timer;
+	private TimeTracker timer;
 
 	private TriggeredState() {
 
@@ -27,13 +28,13 @@ public class TriggeredState extends SecuritySystemState {
 	}
 
 	@Override
-	public void handleEvent(DisarmEvent event) {
+	public void handleEvent(NumericEnteredEvent event) {
 		SecuritySystemContext.instance().changeState(DisarmedState.instance());
 	}
 
 	@Override
 	public void handleEvent(TimerTickedEvent event) {
-		SecuritySystemContext.instance().showTimeLeft(timer.getTimeValue());
+		SecuritySystemContext.instance().showTimeLeft(timer.getRemainingTime(), "Breach");
 	}
 
 	@Override
@@ -43,14 +44,16 @@ public class TriggeredState extends SecuritySystemState {
 
 	@Override
 	public void enter() {
-		// TODO Auto-generated method stub
+		timer = new TimeTracker(10, this);
+		SecuritySystemContext.instance().showTriggered();
+		SecuritySystemContext.instance().showTimeLeft(timer.getRemainingTime(), "Breach");
 
 	}
 
 	@Override
 	public void leave() {
-		// TODO Auto-generated method stub
-
+		timer = null;
+		SecuritySystemContext.instance().showTimeLeft(0, "Breach");
 	}
 
 }

@@ -1,6 +1,6 @@
 package states;
 
-import events.DisarmEvent;
+import events.NumericEnteredEvent;
 
 public class BreachedState extends SecuritySystemState {
 	private static BreachedState instance;
@@ -25,7 +25,7 @@ public class BreachedState extends SecuritySystemState {
 	}
 
 	@Override
-	public void handleEvent(DisarmEvent event) {
+	public void handleEvent(NumericEnteredEvent event) {
 		SecuritySystemContext.instance().changeState(DisarmedState.instance());
 	}
 
@@ -37,8 +37,7 @@ public class BreachedState extends SecuritySystemState {
 
 	@Override
 	public void leave() {
-		// TODO Auto-generated method stub
-
+		SecuritySystemContext.instance().showDisarmed();
 	}
 
 }
